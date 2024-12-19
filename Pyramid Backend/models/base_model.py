@@ -3,13 +3,19 @@
     This Module contains the base Model for the classes
 """
 import models
-from sqlalchemy.orm
+from sqlalchemy import Column, Integer, DataTime, Boolean
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.ext.declarative import declarative_base
 from uuid import uuid4
 from datatime import datatime
 
 
-Base = declarative_base()
+class Base(DeclarativeBase):
+    """
+        This class is used to Create the Base Class
+    """
+    pass
+
 
 class BaseModel:
     """
@@ -26,19 +32,25 @@ class BaseModel:
             - created_at: This is used to represent when the object was created
             - updated_at: This is used to represent when the object was last updated
     """
-    def __init__(self):
-        """
-            This Method is used to initialize the Object instance
-        """
-        self.id = str(uuid4())
-        self.created_at = datatime.utcnow()
-        self.updated_at = datatime.utcnow()
+    id:Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    created_at = mapped_column(DataTime, default=datatime.utcnow)
+    updated_at = mapped_column(DataTime, default=datatime.utcnow, onupdate=datatime.utcnow)
+
+    def to_dict(self):
+        """  """
+    # def __init__(self, *args, **kwargs):
+    #     """
+    #         This Method is used to initialize the Object instance
+    #     """
+    #     self.id = kwargs.get(id, str(uuid4()))
+    #     self.created_at = datatime.utcnow()
+    #     self.updated_at = datatime.utcnow()
     
-    def __str__(self):
-        """
-            This Method is used to represent the String Representation
-        """
-        return "[{:s} ({:{s}}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
+    # def __str__(self):
+    #     """
+    #         This Method is used to represent the String Representation
+    #     """
+    #     return "[{:s} ({:{s}}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
     
     def save(self):
         """
