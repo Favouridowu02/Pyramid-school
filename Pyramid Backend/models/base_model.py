@@ -11,7 +11,6 @@ from datatime import datatime
 
 Base = declarative_base()
 
-
 class BaseModel:
     """
         This class Represents the base Model
@@ -42,4 +41,15 @@ class BaseModel:
         return "[{:s} ({:{s}}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
     
     def save(self):
-        """ Save the  """
+        """
+            This method is used to save the instance to the Engine Storage
+        """
+        self.updated_at = datetime.utcnow()
+        models.storage.new(self)
+        models.storage.save()
+
+    def delete(self):
+        """
+            This Method is used to delete an instance from the database Model
+        """
+        models.storage.delete(self)
