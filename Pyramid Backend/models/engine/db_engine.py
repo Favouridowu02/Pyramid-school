@@ -13,9 +13,6 @@ import os
 
 load_dotenv()
 
-DATABASE_URL = os.getenv('DATABASE_URL')
-print(DATABASE_URL)
-
 class DBEngine():
     """
         This Engine is used represent the Database Engine
@@ -24,44 +21,40 @@ class DBEngine():
     __session = None
 
     def __init__(self):
-        self.__engine = create_engine(DATABASE_URL)
-        """this Part will be updated when the dotenv is used"""
-        if PYRAMID_TEST == "test":
-            Base.metadata.drop_all(self.__engine)
-    
+        """
+            This is the initialization of the Database engine
+        """
+        pass
+
     def new(self, obj):
         """
             This Method is used to add the object to the database session
         """
-        self.__session.add(obj)
+        pass
 
     def save(self):
         """
             This Method is used to save the object to the database 
         """
-        self.__session.commit()
+        pass
 
     def delete(self, obj=None):
         """
             This Method is used to delete the object from the database session 
         """
-        if obj is not None:
-            self.__session.delete(obj)
+        pass
 
     def reload(self):
         """
             This Method is used to reload data from the session
         """
-        Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session()
+        pass
 
     def close(self):
         """
             This session is used to close the private session
         """
-        self.__session.remove()
+        pass
 
     def get(self, cls, id):
         """
@@ -75,7 +68,5 @@ class DBEngine():
             Return: The object based on the class and its ID, or None
                     id not Found.
         """
-        if cls is None or id is None:
-            return None
-        objects = self.all(cls)
+        pass
 

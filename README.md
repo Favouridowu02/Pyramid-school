@@ -50,13 +50,9 @@ To create a platform where learners from all backgrounds can achieve their educa
 ```
 THIS WILL BE UPDATED.
 Pyramid-School/
-├── src/
-│   ├── components/    # Reusable UI components
-│   ├── pages/         # Application pages
-│   ├── utils/         # Utility functions
-│   └── styles/        # Global and component-specific styles
-├── public/            # Static assets
-├── package.json       # Project metadata and dependencies
+├── Pyramid Backend
+│   ├── models/        # Contains all the backend Models
+│   ├── models/engine/ # Contains the Engine to run the backend Application
 └── README.md          # Project documentation
 ```
 
