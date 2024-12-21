@@ -3,11 +3,12 @@
     This Module contains the base Model for the classes
 """
 import models
-from sqlalchemy import Column, Integer, DataTime, Boolean
+from sqlalchemy import Column, Integer, DateTime, Boolean, String
 from sqlalchemy.orm import DeclarativeBase
 from uuid import uuid4
 from datatime import datatime
 
+time = "%Y-%m-%dT%H:%M:%S.%f"
 
 class Base(DeclarativeBase):
     """
@@ -15,6 +16,8 @@ class Base(DeclarativeBase):
     """
     pass
 
+def generate_uuid():
+    return str(uuid4())
 
 class BaseModel:
     """
@@ -31,17 +34,29 @@ class BaseModel:
             - created_at: This is used to represent when the object was created
             - updated_at: This is used to represent when the object was last updated
     """
-    pass
+    id = Column("id", String(60), primary_key=True, default=generate_uuid)
+    created_at = Column("created_at", DateTime, default=datetime.utcnow)
+    updated_at = Column("created_at", DateTime, default=datetime.utcnow)
 
-    def to_dict(self):
-        """"""
-        pass
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """
             This Method is used to initialize the Object instance
         """
-        pass
+        self.created_at = datatime.utcnow()
+        self.updated_at = self.created_at
+        
+
+    def to_dict(self):
+        """This method is used to return the json format of the Object"""
+        new_dict = self.__dict__.copy()
+        if "created_at" in new_dict:
+            new_dict["created_at"] = new_dict["created_at"].strftime(time)
+        if "updated_at" in new_dict:
+            new_dict["updated_at"] = new_dict['updated_at'].strftime(time)
+        new_dict["__class__"] = self.__class__.__name__
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
+        return new_dict
     
     def __str__(self):
         """
