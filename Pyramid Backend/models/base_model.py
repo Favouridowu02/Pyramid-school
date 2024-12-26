@@ -10,14 +10,17 @@ from datatime import datatime
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
+
 class Base(DeclarativeBase):
     """
         This class is used to Create the Base Class
     """
     pass
 
+
 def generate_uuid():
     return str(uuid4())
+
 
 class BaseModel:
     """
@@ -26,13 +29,16 @@ class BaseModel:
         Methods:
             - to_dict: To convert the instance of this class to a Json format
             - save: To save the instance of the class to the Engine{Database}
-            - delete: This is used to delete the object from the Engine{Database}
-            - update: This is used to update the object in the Engine{Database}
+            - delete: This is used to delete the object from the
+                        Engine{Database}
+            - update: This is used to update the object in the
+                        Engine{Database}
 
         Attributes:
             - id: The uuidn  instance used to uniquely represent the object
             - created_at: This is used to represent when the object was created
-            - updated_at: This is used to represent when the object was last updated
+            - updated_at: This is used to represent when the object
+                            was last updated
     """
     id = Column("id", String(60), primary_key=True, default=generate_uuid)
     created_at = Column("created_at", DateTime, default=datetime.utcnow)
@@ -44,7 +50,6 @@ class BaseModel:
         """
         self.created_at = datatime.utcnow()
         self.updated_at = self.created_at
-        
 
     def to_dict(self):
         """This method is used to return the json format of the Object"""
@@ -57,13 +62,13 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
-    
+
     def __str__(self):
         """
             This Method is used to represent the String Representation
         """
         return "[{:s} ({:{s}}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
-    
+
     def save(self):
         """
             This method is used to save the instance to the Engine Storage
