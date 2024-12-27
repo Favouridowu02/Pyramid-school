@@ -2,11 +2,10 @@
 """
     This Module contains the base Model for the classes
 """
-import models
 from sqlalchemy import Column, Integer, DateTime, Boolean, String
 from sqlalchemy.orm import DeclarativeBase
 from uuid import uuid4
-from datatime import datatime
+from datetime import datetime
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -35,21 +34,14 @@ class BaseModel:
                         Engine{Database}
 
         Attributes:
-            - id: The uuidn  instance used to uniquely represent the object
+            - id: The uuid instance used to uniquely represent the object
             - created_at: This is used to represent when the object was created
             - updated_at: This is used to represent when the object
                             was last updated
     """
-    id = Column("id", String(60), primary_key=True, default=generate_uuid)
-    created_at = Column("created_at", DateTime, default=datetime.utcnow)
-    updated_at = Column("created_at", DateTime, default=datetime.utcnow)
-
-    def __init__(self):
-        """
-            This Method is used to initialize the Object instance
-        """
-        self.created_at = datatime.utcnow()
-        self.updated_at = self.created_at
+    id = Column(String(60), primary_key=True, default=generate_uuid)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def to_dict(self):
         """This method is used to return the json format of the Object"""
@@ -67,16 +59,20 @@ class BaseModel:
         """
             This Method is used to represent the String Representation
         """
-        return "[{:s} ({:{s}}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{:s} ({:s}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """
             This method is used to save the instance to the Engine Storage
         """
-        pass
+        from models import storage
+        storage.new(self)
+        storage.save()
 
     def delete(self):
         """
             This Method is used to delete an instance from the database Model
         """
-        pass
+        from models import storage
+        storage.add(self)
+        storage.save()

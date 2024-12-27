@@ -1,1 +1,3 @@
 handle Error handling in the database Engine
+
+mysql -upyramid_dev -ppyramid_dev_pwd pyramid_dev_db
