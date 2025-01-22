@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
-    This Module is used to set up the api endpoint
+    This module sets up the Flask application for the Pyramid Backend API.
+    It configures the application, initializes the database, and registers
+    the necessary routes and blueprints for the API endpoints.
 """
 from dotenv import load_dotenv
 from api.v1.views import app_views
