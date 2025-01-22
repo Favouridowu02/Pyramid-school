@@ -10,7 +10,6 @@ class User(BaseModel, Base):
     """
         This class is used to create the Users Schema
     """
-    __tablename__ = "users"
     first_name = Column(String(128), nullable=False) #nulable is set to True because of testing
     last_name = Column(String(128),  nullable=True)
     password = Column(String(128),  nullable=True)
@@ -23,6 +22,7 @@ class Student(User):
     """
         This Class is used to create the Students Schema
     """
+    __tablename__ = "students"
     def __init__(self, first_name, last_name=None, password=None, email=None, xp=None):
         """ Initialize the Student Class
         """
