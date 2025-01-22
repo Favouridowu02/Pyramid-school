@@ -16,3 +16,16 @@ class User(BaseModel, Base):
     password = Column(String(128),  nullable=True)
     email = Column(String(128), nullable=True)
     xp = Column(Integer, nullable=True)
+
+
+# This would be updated soon
+class Student(User):
+    """
+        This Class is used to create the Students Schema
+    """
+    __tablename__ = "students"
+
+    def __init__(self, first_name, last_name=None, password=None, email=None, xp=None):
+        """ Initialize the Student Class
+        """
+        super.__init__(first_name, last_name, password, email, xp)
