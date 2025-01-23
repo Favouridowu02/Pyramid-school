@@ -14,8 +14,6 @@ class User:
     last_name = Column(String(128),  nullable=True)
     password = Column(String(128),  nullable=True)
     email = Column(String(128), nullable=True)
-    def __init__(first_name, last_name=None, password=None, email=None):
-        
 
 
 # This would be updated soon
