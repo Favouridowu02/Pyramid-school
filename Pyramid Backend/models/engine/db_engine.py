@@ -71,7 +71,7 @@ class DBEngine():
         """
         self.__session.close()
 
-    def get(self, cls, id):
+    def get(self, cls, id=None, **kwargs):
         """
             This Method is used to retrieve an object based on
             the id from the database
@@ -83,10 +83,14 @@ class DBEngine():
             Return: The object based on the class and its ID, or None
                     id not Found.
         """
-        if cls is None or id is None:
+        if cls is None:
             return None
-
-        obj = self.__session(cls).filter_by(cls.id == id)
+        if kwargs:
+            obj = self.__session.query(cls).filter_by(**kwargs).first()
+        else:
+            if id is None:
+                return None
+            obj = self.__session.query(cls).filter_by(id=id).first()
         return obj
 
     def all(self, cls=None):
