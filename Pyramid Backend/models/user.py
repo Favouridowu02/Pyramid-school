@@ -14,6 +14,7 @@ class Student(BaseModel, Base):
     __tablename__ = "students"
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128),  nullable=True)
+    user_name = Column(String(128), nullable=True)
     password = Column(String(128),  nullable=True)
     email = Column(String(128), nullable=True)
     xp = Column(Integer, nullable=True)
