@@ -21,7 +21,7 @@ class Student(BaseModel, Base):
     student_projects = relationship("StudentProject", back_populates="student")
 
 
-class Mentor(BaseModel, User, Base):
+class Mentor(BaseModel, Base):
     """
         This Class is used to create the Mentor Schema
     """
@@ -32,7 +32,7 @@ class Mentor(BaseModel, User, Base):
     email = Column(String(128), nullable=True)
 
 
-class Admin(BaseModel, User, Base):
+class Admin(BaseModel, Base):
     """
         This Class is used to create the Admin Schema
     """
