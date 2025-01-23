@@ -1,0 +1,15 @@
+ mysql -upyramid_dev -ppyramid_dev_pwd pyramid_dev_db
+
+
+ SHOW TABLES;
+
+ DROP TABLE courses, programs, projects, users, students;
+
+ SELECT * FROM projects;
+ SELECT * FROM courses;
+ SELECT * FROM admins;
+ SELECT * FROM programs;
+ SELECT * FROM mentors;
+ SELECT * FROM projects;
+ SELECT * FROM student_projects;
+ SELECT * FROM students;

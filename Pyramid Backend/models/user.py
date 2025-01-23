@@ -2,51 +2,54 @@
 """
     This Model contains the User class
 """
-from models.base_model import Base
-from models.base_model import BaseModel
+from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
 
-class User(BaseModel, Base):
+class User:
     """
         This class is used to create the Users Schema
     """
-    first_name = Column(String(128), nullable=False) #nulable is set to True because of testing
+    first_name = Column(String(128), nullable=False)
     last_name = Column(String(128),  nullable=True)
     password = Column(String(128),  nullable=True)
     email = Column(String(128), nullable=True)
-    xp = Column(Integer, nullable=True)
+    def __init__(first_name, last_name=None, password=None, email=None):
+        
 
 
 # This would be updated soon
-class Student(User):
+class Student(BaseModel, User, Base):
     """
         This Class is used to create the Students Schema
     """
     __tablename__ = "students"
-    def __init__(self, first_name, last_name=None, password=None, email=None, xp=None):
+    xp = Column(Integer, nullable=True)
+
+    student_projects = relationship("StudentProject", back_populates="student")
+    def __init__(self):
         """ Initialize the Student Class
         """
-        super.__init__(first_name, last_name, password, email, xp)
+        super().__init__()
 
 
-
-class Mentor(User):
+class Mentor(BaseModel, User, Base):
     """
         This Class is used to create the Mentor Schema
     """
     __tablename__ = "mentors"
-    def __init__(self, first_name, last_name=None, password=None, email=None, xp=None):
+    def __init__(self):
         """ Initialize the Student Class
         """
-        super.__init__(first_name, last_name, password, email, xp)
+        super().__init__()
 
 
-class Admin(User):
+class Admin(BaseModel, User, Base):
     """
         This Class is used to create the Admin Schema
     """
     __tablename__ = "admins"
-    def __init__(self, first_name, last_name=None, password=None, email=None, xp=None):
+    def __init__(self):
         """ Initialize the Student Class
         """
-        super.__init__(first_name, last_name, password, email, xp)
+        super().__init__()

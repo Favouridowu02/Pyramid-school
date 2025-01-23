@@ -14,8 +14,10 @@ class Project(BaseModel, Base):
     __tablename__ = "projects"
     name = Column(String(128), nullable=False)
     description = Column(Text, nullable=False)
-    duration = Column(Integer)
-    estimatedTime = Column(Integer)
-    markdown = Column(Text)
+    duration = Column(Integer, nullable=True)
+    estimated_time = Column(Integer, nullable=True)
+    markdown = Column(Text, nullable=True)
     course_id = Column(String(60), ForeignKey('courses.id'), nullable=False)
     course = relationship('Course', back_populates="projects")
+
+    student_projects = relationship("StudentProject", back_populates="project")
