@@ -15,5 +15,4 @@ class Course(BaseModel, Base):
     name = Column(String(128), nullable=False)
     program_id = Column(String(60), ForeignKey('programs.id'), nullable=False)
     
-    projects = relationship("Project", back_populates="course")
     program = relationship("Program", back_populates='courses')
