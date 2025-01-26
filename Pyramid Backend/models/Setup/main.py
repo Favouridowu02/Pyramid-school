@@ -4,15 +4,15 @@
 """
 from models import storage
 from models.user import Student, Mentor, Admin
+from models.student_projects import StudentProject
 from models.project import Project
 from models.course import Course
 from models.program import Program
-from models.student_project import StudentProject
 from models.task import Task
+
 
 # Reload storage to ensure database is initialized
 storage.reload()
-
 
 # Create a Program
 program1 = Program(name="Computer Science")
@@ -51,6 +51,7 @@ storage.save()
 student1 = Student(
     first_name="John", 
     last_name="Doe", 
+    user_name="jodo",
     email="john.doe@example.com", 
     password="password456", 
     xp=200
@@ -58,6 +59,7 @@ student1 = Student(
 student2 = Student(
     first_name="Jane", 
     last_name="Smith", 
+    user_name="jo",
     email="jane.smith@example.com", 
     password="password123", 
     xp=150
@@ -101,4 +103,23 @@ admin1 = Admin(
 storage.new(admin1)
 storage.save()
 
-print("Database populated successfully!")
+# Create and save a Task instance
+task1 = Task(name="Task 1", github_link="https://github.com/example/repo", img_url="https://example.com/image.png")
+storage.new(task1)
+storage.save()
+
+# Print the created instances
+print(f"Student: {student1}")
+print(f"Student: {student2}")
+print(f"Mentor: {mentor1}")
+print(f"Admin: {admin1}")
+print(f"Program: {program1}")
+print(f"Course: {course1}")
+print(f"Course: {course2}")
+print(f"Project: {project1}")
+print(f"Project: {project2}")
+print(f"StudentProject: {student_project1}")
+print(f"StudentProject: {student_project2}")
+print(f"Task: {task1}")
+
+print("\n\n Database populated successfully!")
