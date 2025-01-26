@@ -93,9 +93,17 @@ class DBEngine():
             obj = self.__session.query(cls).filter_by(id=id).first()
         return obj
 
+
     def all(self, cls=None):
         """query on the current database session"""
-        if cls is None:
-            return None
-        objs = self.__session.query(cls).all()
-        return objs
+        if cls:
+            return self.__session.query(cls).all()
+        else:
+            all_classes = [Student, Admin, Mentor, Course, Program, Project, Task]
+            all_objects = {}
+            for class_type in all_classes:
+                objects = self.__session.query(class_type).all()
+                for obj in objects:
+                    key = f"{obj.__class__.__name__}.{obj.id}"
+                    all_objects[key] = obj
+            return all_objects
