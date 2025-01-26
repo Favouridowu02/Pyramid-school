@@ -2,8 +2,7 @@
 """
     This Model contains the Task class
 """
-from models.base_model import Base
-from models.base_model import BaseModel
+from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -13,5 +12,5 @@ class Task(BaseModel, Base):
     """
     __tablename__ = "tasks"
     name = Column(String(128), nullable=False)
-    github_link = Column(String(128))
-    img_url = Column(String(128))
+    github_link = Column(String(128), nullable=True)
+    img_url = Column(String(128), nullable=True)
