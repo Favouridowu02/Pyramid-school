@@ -3,7 +3,7 @@
 
  SHOW TABLES;
 
- DROP TABLE courses, programs, projects, students, admins, student_projects, mentors;
+ DROP TABLE courses, programs, projects, students, admins, student_projects, mentors, tasks;
 
  SELECT * FROM projects;
  SELECT * FROM courses;
