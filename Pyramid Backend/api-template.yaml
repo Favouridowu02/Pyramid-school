@@ -1,0 +1,517 @@
+openapi: '3.0.0'
+info:
+  version: '1.0.0'
+  title: 'Pyramid SWE Main API'
+  description: This is the main API for Pyramid School Web Application
+servers:
+  - url: https://api.pyramidswe.com/v1/
+
+paths:
+  /auth/register:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "first_name"
+                - "last_name"
+                - "email"
+                - "username"
+                - "password"
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+      "responses":
+        "201":
+          description: OK. Successful
+  /auth/login:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "username"
+                - "password"
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      "responses":
+        "200":
+          description: Authentication Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+  /auth/logout:
+    description: Blackists the user loging Token from the database
+    post:
+      "responses":
+        "200":
+          description: Logout Successful
+  /auth/forgot_password:
+    description: Resets a user password
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reset_token:
+                  type: string
+                  description: User reset token to reset password
+                new_password:
+                  type: string
+      responses:
+        "200":
+          description: OK. Password reset successfull
+        "401":
+          description: Occurs if the user sends the wrong token.
+        "400":
+          description: The client request was not well structured. This occurs if the client
+            fails to send either the new password or the reset token
+
+  /students:
+    get:
+      description: Gets information of all registered students
+      "responses":
+        "200":
+          description: Resource Retrieved Successfully!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    email:
+                      type: string
+                    username:
+                      type: string
+                    xp:
+                      type: string
+
+  /student/{id}:
+    get:
+      description: Retrieves data about a specific student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK. Record Retrieved Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+                  username:
+                    type: string
+                  xp:
+                    type: string
+    delete:
+      description: Delete a student record from the database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok. Resource Deletion Successful!
+        "401":
+          description: UnAuthorized. Occurs if an unauthorized client tries to delete|
+            another student record. For example, only admins should be able to delete students account
+    patch:
+      description: Updates basic student information
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Note that only fields that require an update should be sent
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                username:
+                  type: string
+                xp:
+                  type: string
+      responses:
+        "200":
+          description: Ok. Resource update successfull
+
+  /program:
+    get:
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Ok. Record Retieved Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+    post:
+      description: Create a new program
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      "responses":
+        "201":
+          description: Resource created Successfully!
+    delete:
+      description: Delete a Program from the database
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Resource Deleted Successfully!
+    patch:
+      description: Updates a program details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "id"
+              properties:
+                id:
+                  type: string
+                  description: ID of the program to update
+                name:
+                  type: string
+      responses:
+        "200":
+          description: OK! Record Updated Successfully!
+
+  /course:
+    get:
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Ok. Record Retieved Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+    post:
+      description: Create a new course
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      "responses":
+        "201":
+          description: Resource created Successfully!
+    delete:
+      description: Delete a Course from the database
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Resource Deleted Successfully!
+    patch:
+      description: Updates a course details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "id"
+              properties:
+                id:
+                  type: string
+                  description: ID of the course to update
+                name:
+                  type: string
+      responses:
+        "200":
+          description: OK! Record Updated Successfully!
+
+  /project:
+    get:
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Ok. Record Retieved Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  resources:
+                    type: string
+                  duration:
+                    type: string
+                  estimated_time:
+                    type: string
+    post:
+      description: Create a new project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                resources:
+                  type: string
+                duration:
+                  type: string
+                estimated_time:
+                  type: string
+      "responses":
+        "201":
+          description: Resource created Successfully!
+    delete:
+      description: Delete a Program from the database
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Resource Deleted Successfully!
+    patch:
+      description: Updates a program details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "id"
+              properties:
+                id:
+                  type: string
+                  description: ID of the program to update
+                name:
+                  type: string
+                description:
+                  type: string
+                resources:
+                  type: string
+                duration:
+                  type: string
+                estimated_time:
+                  type: string
+      responses:
+        "200":
+          description: OK! Record Updated Successfully!
+
+  /task:
+    get:
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Ok. Record Retieved Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  github_link:
+                    type: string
+                  drive_link:
+                    type: string
+    post:
+      description: Create a new Task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                github_link:
+                  type: string
+                drive_link:
+                  type: string
+      "responses":
+        "201":
+          description: Resource created Successfully!
+    delete:
+      description: Delete a Task from the database
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      "responses":
+        "200":
+          description: Resource Deleted Successfully!
+    patch:
+      description: Updates a task details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "id"
+              properties:
+                id:
+                  type: string
+                  description: ID of the Task to update
+                name:
+                  type: string
+                github_link:
+                  type: string
+                drive_link:
+                  type: string
+      responses:
+        "200":
+          description: OK! Record Updated Successfully!
+
+  /student/project/add:
+    post:
+      description: Adds a new project to the student's personal collection.|
+        Projects in this collection indicate that the project has been unlocked.|
+        At this stage the status of the project will be saved as 'pending'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  description: ID of the student who the project belongs to
+                project_id:
+                  type: string
+      "responses":
+        "200":
+          description: OK. Successful
+
+  /student/project/submit:
+    post:
+      description: At this point the status of the project converts to 'done'
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    description: ID of the student who the project belongs to
+                  project_id:
+                    type: string
+      "responses":
+          "200":
+            description: OK. Successful

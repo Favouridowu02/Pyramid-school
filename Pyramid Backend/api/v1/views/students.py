@@ -45,7 +45,7 @@ def one_student(student_id: str = None) -> str:
   return jsonify(student.to_dict()), 200
 
 
-@app_views.route("/students/<patient_id>", methods=['DELETE'],
+@app_views.route("/students/<student_id>", methods=['DELETE'],
                  strict_slashes=False)
 def delete_student(student_id: str = None) -> str:
   """ DELETE /api/v1/students/:id
