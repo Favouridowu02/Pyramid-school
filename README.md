@@ -26,15 +26,15 @@ To create a platform where learners from all backgrounds can achieve their educa
    ```
 2. Navigate to the project directory:
    ```bash
-   cd pyramid-school
+   cd pyramid-school/Pyramid-Backend
    ```
 3. Install dependencies:
    ```bash
-   npm install
+   pip3 install -r requirements.txt
    ```
 4. Start the development server:
    ```bash
-   npm run dev
+   python3 -m api.v1.app
    ```
 
 ## Tech Stack
@@ -53,6 +53,8 @@ Pyramid-School/
 ├── Pyramid Backend
 │   ├── models/        # Contains all the backend Models
 │   ├── models/engine/ # Contains the Engine to run the backend Application
+│   ├── api/v1/views # Contains the views for the API endpoint
+│   ├── api/v1/app.py # This contains the starting point for the api End point
 └── README.md          # Project documentation
 ```
 
@@ -60,6 +62,8 @@ Pyramid-School/
 
 - [x] Brain storm to finish up the Ideration stage on the Features to be added
 - [x] Finish the Wireframe
+- [x] Finish the Database Design
+- [x] Finish the api Endpoint Creation
 - [ ] Design user onboarding flow
 - [ ] Implement XP system backend logic
 - [ ] Develop interactive learning modules
@@ -95,9 +99,6 @@ For any inquiries or feedback, please reach out to:
 
 - **Email:** [favouridowu02@gmail.com](mailto:favouridowu02@gmail.com)
 - **GitHub:** [Favour Idowu](https://github.com/Favouridowu02)
-
-- **Email:** [dadaauthourity23@gmail.com](mailto:dadaauthourity23@gmail.com)
-- **GitHub:** [Dada Authority Clement](https://github.com/Dadaauth)
 
 - **Email:** [idaeworfavour1@gmail.com](idaeworfavour1@gmail.com)
 - **GitHub:** [Favour Idaewor](https://github.com/Favour04)
