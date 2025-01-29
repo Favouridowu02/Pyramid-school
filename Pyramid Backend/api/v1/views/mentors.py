@@ -120,7 +120,7 @@ def create_mentor():
 
 
 @app_views.route('/mentors/<mentor_id>', methods=["PUT"], strict_slashes=False)
-def update_mentor(patient_id: str = None) -> str:
+def update_mentor(mentor_id: str = None) -> str:
   """ PUT /api/v1/mentor/:id
   Update a mentor Data
   Request JSON body
@@ -145,21 +145,21 @@ def update_mentor(patient_id: str = None) -> str:
   if request_json is None:
     error_message = "Wrong Format"
   else:
-    mentor = storage.get(Mentor, mentor_id)
-    if mentor is None:
-      abort(404)
-    first_name = request_json.get('first_name',
-                                  mentor.first_name)
-    last_name = request_json.get('last_name',
-                                  mentor.last_name)
-    mentor.first_name = first_name
-    mentor.last_name = last_name
-    mentor.user_name = request_json.get('user_name', mentor.user_name)
-    mentor.password = request_json.get('password', mentor.password)
-    mentor.email = request_json.get('email', mentor.email)
+    try:
+      mentor = storage.get(Mentor, mentor_id)
+      if mentor is None:
+        abort(404)
+      first_name = request_json.get('first_name',
+                                    mentor.first_name)
+      last_name = request_json.get('last_name',
+                                    mentor.last_name)
+      mentor.first_name = first_name
+      mentor.last_name = last_name
+      mentor.password = request_json.get('password', mentor.password)
+      mentor.email = request_json.get('email', mentor.email)
 
-    mentor.save()
-    return jsonify(mentor.to_dict()), 200
-  except Exception as e:
-      error_message = "Can't update Mentor: {}".format(e)
-return jsonify({"error": error_message}), 400
+      mentor.save()
+      return jsonify(mentor.to_dict()), 200
+    except Exception as e:
+        error_message = "Can't update Mentor: {}".format(e)
+  return jsonify({"error": error_message}), 400
