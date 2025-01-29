@@ -120,7 +120,7 @@ def create_student():
 
 
 @app_views.route('/students/<student_id>', methods=["PUT"], strict_slashes=False)
-def update_student(patient_id: str = None) -> str:
+def update_student(student_id: str = None) -> str:
   """ PUT /api/v1/student/:id
   Update a student Data
   Request JSON body
@@ -145,21 +145,22 @@ def update_student(patient_id: str = None) -> str:
   if request_json is None:
     error_message = "Wrong Format"
   else:
-    student = storage.get(Student, student_id)
-    if student is None:
-      abort(404)
-    first_name = request_json.get('first_name',
-                                  student.first_name)
-    last_name = request_json.get('last_name',
-                                  student.last_name)
-    student.first_name = first_name
-    student.last_name = last_name
-    student.user_name = request_json.get('user_name', student.user_name)
-    student.password = request_json.get('password', student.password)
-    student.email = request_json.get('email', student.email)
+    try:
+      student = storage.get(Student, student_id)
+      if student is None:
+        abort(404)
+      first_name = request_json.get('first_name',
+                                    student.first_name)
+      last_name = request_json.get('last_name',
+                                    student.last_name)
+      student.first_name = first_name
+      student.last_name = last_name
+      student.user_name = request_json.get('user_name', student.user_name)
+      student.password = request_json.get('password', student.password)
+      student.email = request_json.get('email', student.email)
 
-    student.save()
-    return jsonify(student.to_dict()), 200
-  except Exception as e:
-      error_message = "Can't update Student: {}".format(e)
-return jsonify({"error": error_message}), 400
+      student.save()
+      return jsonify(student.to_dict()), 200
+    except Exception as e:
+        error_message = "Can't update Student: {}".format(e)
+  return jsonify({"error": error_message}), 400
