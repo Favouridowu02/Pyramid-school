@@ -2,7 +2,7 @@
 """
     This Module contains the API End Points for the Courses
 """
-from models.user import Course
+from models.course import Course
 from flask import request, jsonify, abort
 from models import storage
 from api.v1.views import app_views
@@ -145,21 +145,22 @@ def update_course(patient_id: str = None) -> str:
   if request_json is None:
     error_message = "Wrong Format"
   else:
-    course = storage.get(Course, course_id)
-    if course is None:
-      abort(404)
-    first_name = request_json.get('first_name',
-                                  course.first_name)
-    last_name = request_json.get('last_name',
-                                  course.last_name)
-    course.first_name = first_name
-    course.last_name = last_name
-    course.user_name = request_json.get('user_name', course.user_name)
-    course.password = request_json.get('password', course.password)
-    course.email = request_json.get('email', course.email)
+    try:
+      course = storage.get(Course, course_id)
+      if course is None:
+        abort(404)
+      first_name = request_json.get('first_name',
+                                    course.first_name)
+      last_name = request_json.get('last_name',
+                                    course.last_name)
+      course.first_name = first_name
+      course.last_name = last_name
+      course.user_name = request_json.get('user_name', course.user_name)
+      course.password = request_json.get('password', course.password)
+      course.email = request_json.get('email', course.email)
 
-    course.save()
-    return jsonify(course.to_dict()), 200
-  except Exception as e:
-      error_message = "Can't update Course: {}".format(e)
-return jsonify({"error": error_message}), 400
+      course.save()
+      return jsonify(course.to_dict()), 200
+    except Exception as e:
+        error_message = "Can't update Course: {}".format(e)
+  return jsonify({"error": error_message}), 400
