@@ -1,5 +1,6 @@
  mysql -upyramid_dev -ppyramid_dev_pwd pyramid_dev_db
 
+    python -m models.Setup.main
 
  SHOW TABLES;
 
