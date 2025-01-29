@@ -98,8 +98,6 @@ def create_mentor():
       error_message = "First Name Missing"
     elif not request_json.get("last_name"):
       error_message = "Last Name Missing"
-    elif not request_json.get("user_name"):
-      error_message = "User Name missing"
     elif not request_json.get("password"):
       error_message = "Password Missing"
     elif not request_json.get("email"):
@@ -110,7 +108,6 @@ def create_mentor():
         mentor.first_name = request_json.get('first_name')
         mentor.last_name = request_json.get('last_name')
         mentor.email = request_json.get("email")
-        mentor.user_name = request_json.get("user_name")
         mentor.password = request_json.get("password")
         mentor.save()
         return jsonify(mentor.to_dict()), 201
