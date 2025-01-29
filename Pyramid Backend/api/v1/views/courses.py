@@ -19,7 +19,6 @@ def all_courses() -> str:
     """
     all_courses = storage.all(Course)
     all_courses_list = [course.to_dict() for course in all_courses]
-    print("\n\n", all_courses_list, "\n\n")
     return jsonify(all_courses_list), 200
 
 @app_views.route('/courses/<course_id>', methods=["GET"], strict_slashes=False)
@@ -73,12 +72,8 @@ def create_course():
   """ POST /api/v1/courses
   Description: Create a new Course
   Request JSON body:
-    - first_name
-    - last_name
-    - user_name
-    - password
-    - email
-    - xp
+    - name
+    - program_id
   Return:
     - JSON representation of the created course, 201
     - 400 if any required field is missing or if there is an error
@@ -94,24 +89,15 @@ def create_course():
   if request_json is None:
     error_message = "Wrong Format"
   else:
-    if not request_json.get('first_name'):
-      error_message = "First Name Missing"
-    elif not request_json.get("last_name"):
-      error_message = "Last Name Missing"
-    elif not request_json.get("user_name"):
-      error_message = "User Name missing"
-    elif not request_json.get("password"):
-      error_message = "Password Missing"
-    elif not request_json.get("email"):
-      error_message = "Missing Email"
+    if not request_json.get('name'):
+      error_message = "Course Name Missing"
+    elif not request_json.get("program_id"):
+      error_message = "Missing or Wrong Program ID"
     else:
       try:
         course = Course()
-        course.first_name = request_json.get('first_name')
-        course.last_name = request_json.get('last_name')
-        course.email = request_json.get("email")
-        course.user_name = request_json.get("user_name")
-        course.password = request_json.get("password")
+        course.name = request_json.get('name')
+        course.program_id = request_json.get('program_id')
         course.save()
         return jsonify(course.to_dict()), 201
       except Exception as e:
@@ -120,20 +106,19 @@ def create_course():
 
 
 @app_views.route('/courses/<course_id>', methods=["PUT"], strict_slashes=False)
-def update_course(patient_id: str = None) -> str:
+def update_course(course_id: str = None) -> str:
   """ PUT /api/v1/course/:id
   Update a course Data
   Request JSON body
-    - first_name
-    - last_name
-    - user_name
-    - password
-    - email
-    - xp
+    - name
+    - program_id
   Return:
     - JSON representation of the created course
     - 400 if any required field is missing or if there is an error
   """
+  if course_id is None:
+    abort(404)
+  
   request_json = None
   error_message = None
 
@@ -147,18 +132,11 @@ def update_course(patient_id: str = None) -> str:
   else:
     try:
       course = storage.get(Course, course_id)
+      print("\n\n", course, f'"{course_id}"')
       if course is None:
         abort(404)
-      first_name = request_json.get('first_name',
-                                    course.first_name)
-      last_name = request_json.get('last_name',
-                                    course.last_name)
-      course.first_name = first_name
-      course.last_name = last_name
-      course.user_name = request_json.get('user_name', course.user_name)
-      course.password = request_json.get('password', course.password)
-      course.email = request_json.get('email', course.email)
-
+      course.name = request_json.get('name', course.name)
+      course.program_id = request_json.get('program_id', course.program_id)
       course.save()
       return jsonify(course.to_dict()), 200
     except Exception as e:
