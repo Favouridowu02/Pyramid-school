@@ -4,6 +4,7 @@
 """
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, ForeignKey
+from models.program import Program
 from sqlalchemy.orm import relationship
 
 
@@ -15,4 +16,5 @@ class Course(BaseModel, Base):
     name = Column(String(128), nullable=False)
     program_id = Column(String(60), ForeignKey('programs.id'), nullable=False)
     
+    # Relationship
     program = relationship("Program", back_populates='courses')
