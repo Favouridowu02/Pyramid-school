@@ -33,11 +33,6 @@ def one_course(course_id: str = None) -> str:
   """
   if course_id is None:
     abort(404)
-  if course_id == "me":
-    if request.current_user is None:
-      abort(404)
-    else:
-      return jsonify(request.current_user.to_dict()), 200
   course = storage.get(Course, course_id)
   if course is None:
     abort(404)
