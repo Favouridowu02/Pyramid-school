@@ -14,7 +14,7 @@ class Course(BaseModel, Base):
     """
     __tablename__ = "courses"
     name = Column(String(128), nullable=False)
-    program_id = Column(String(60), ForeignKey('programs.id'), nullable=False)
-    
-    # Relationship
-    program = relationship("Program", back_populates='courses')
+    program_id = Column(String(60), ForeignKey('programs.id', ondelete="CASCADE"), nullable=False)
+
+    program = relationship("Program", back_populates="courses")
+    projects = relationship("Project", back_populates="course", cascade="all, delete-orphan")
