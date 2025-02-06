@@ -14,3 +14,6 @@ class Task(BaseModel, Base):
     name = Column(String(128), nullable=False)
     github_link = Column(String(128), nullable=True)
     img_url = Column(String(128), nullable=True)
+    project_id = Column(String(60), ForeignKey('projects.id', ondelete="CASCADE"), nullable=False)
+
+    project = relationship("Project", back_populates="tasks")
