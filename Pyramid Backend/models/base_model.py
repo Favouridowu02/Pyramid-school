@@ -59,7 +59,7 @@ class BaseModel:
         """
             This Method is used to represent the String Representation
         """
-        return "[{:s} ({:s}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{:s} ({}) {}]".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """
