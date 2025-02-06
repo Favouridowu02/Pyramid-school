@@ -10,7 +10,6 @@ from models.course import Course
 from models.program import Program
 from models.task import Task
 
-
 # Reload storage to ensure database is initialized
 storage.reload()
 
@@ -68,6 +67,7 @@ storage.new(student1)
 storage.new(student2)
 storage.save()
 
+print("\n\n\nI am here ")
 # Assign Projects to Students
 student_project1 = StudentProject(
     student_id=student1.id,
@@ -104,7 +104,7 @@ storage.new(admin1)
 storage.save()
 
 # Create and save a Task instance
-task1 = Task(name="Task 1", github_link="https://github.com/example/repo", img_url="https://example.com/image.png")
+task1 = Task(name="Task 1", github_link="https://github.com/example/repo", img_url="https://example.com/image.png", project_id=project1.id)
 storage.new(task1)
 storage.save()
 
