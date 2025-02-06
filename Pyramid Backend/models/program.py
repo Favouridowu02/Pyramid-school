@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    This model is contains the Program class
+    This module is contains the Program class
 """
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String
@@ -13,4 +13,5 @@ class Program(Base, BaseModel):
     """
     __tablename__ = "programs"
     name = Column(String(128), nullable=False)
-    courses = relationship("Course", back_populates="program")
+
+    courses = relationship("Course", back_populates="program", cascade="all, delete-orphan")
