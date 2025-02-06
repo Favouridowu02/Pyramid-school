@@ -18,8 +18,8 @@ class Student(BaseModel, Base):
     password = Column(String(128),  nullable=False)
     email = Column(String(128), nullable=False, unique=True)
     xp = Column(Integer, nullable=False, default=0)
-
-    # student_projects = relationship("StudentProject", back_populates="student")
+    
+    student_projects = relationship("StudentProject", back_populates="student", cascade="all, delete-orphan")
 
 
 class Mentor(BaseModel, Base):
