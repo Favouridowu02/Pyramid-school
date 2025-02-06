@@ -4,7 +4,6 @@
 """
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, ForeignKey
-from models.program import Program
 from sqlalchemy.orm import relationship
 
 
