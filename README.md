@@ -1,6 +1,5 @@
 # Pyramid School
 
-
 Pyramid School is an innovative self-paced learning platform designed to bridge the gap in education by combining learning with fun. Through its unique XP system, Pyramid School encourages users to actively engage in their learning journey while progressing towards their goals.
 
 ## Project Motto
