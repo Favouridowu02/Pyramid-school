@@ -4,7 +4,6 @@ Pyramid School is an innovative self-paced learning platform designed to bridge 
 
 ## Project Motto
 
-
 > "We all come from different backgrounds, but our aim is to get to the top."
 
 ## Features
