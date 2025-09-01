@@ -7,7 +7,6 @@ Pyramid School is an innovative self-paced learning platform designed to bridge 
 
 > "We all come from different backgrounds, but our aim is to get to the top."
 
-
 ## Features
 
 - **Self-Paced Learning:** Users can learn at their own speed, allowing for flexibility and personalized experiences.
